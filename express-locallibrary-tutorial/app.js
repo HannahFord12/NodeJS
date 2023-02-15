@@ -6,7 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+/* const wiki = require("./routes/wiki"); */
+const catalogRouter = require("./routes/catalog"); //Import routes for "catalog" area of site
 var app = express();
 
 // view engine setup
@@ -21,6 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+/* app.use("/wiki", wiki); */
+//app.use("/catalog", catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,11 +40,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', false);
 const mongoDB = "mongodb://127.0.0.1:27017/library";
-l
+
 main().catch(err => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
