@@ -1,8 +1,21 @@
+const Book = require("../models/book");
+const Author = require("../models/author");
+const Genre = require("../models/genre");
 const BookInstance = require("../models/bookinstance");
 
 // Display list of all BookInstances.
 exports.bookinstance_list = (req, res) => {
-  res.send("NOT IMPLEMENTED: BookInstance list");
+  BookInstance.find()
+    .populate("book")
+    .sort({ title: 1 })
+    .sort("author")
+    .exec(function (err, list_books) {
+      if (err) {
+        return next(err);
+      }
+      //Successful, so render
+      res.render("book_instance_list", { title: "Book List", bookinstance_list: list_books });
+    });
 };
 
 // Display detail page for a specific BookInstance.
